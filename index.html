@@ -33,9 +33,9 @@ body{
   -webkit-font-smoothing:antialiased;position:relative;
 }
 
-/* ===== الخلفيات (خفيفة بدون blur) ===== */
+/* ===== خلفية ثابتة خفيفة جداً ===== */
 .bg-grid{
-  position:fixed;inset:0;z-index:-2;pointer-events:none;
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
   background-image:
     linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),
     linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);
@@ -43,33 +43,8 @@ body{
   mask-image:radial-gradient(ellipse 100% 70% at 50% 0%,#000 30%,transparent 80%);
   -webkit-mask-image:radial-gradient(ellipse 100% 70% at 50% 0%,#000 30%,transparent 80%);
 }
-.aurora{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
-.aurora::before,.aurora::after{
-  content:"";position:absolute;border-radius:50%;
-  will-change:transform;
-}
-.aurora::before{
-  width:900px;height:900px;top:-350px;right:-250px;
-  background:radial-gradient(circle,rgba(99,102,241,0.30) 0%,rgba(99,102,241,0.10) 30%,transparent 65%);
-  animation:drift1 24s ease-in-out infinite;
-}
-.aurora::after{
-  width:800px;height:800px;bottom:-300px;left:-200px;
-  background:radial-gradient(circle,rgba(236,72,153,0.26) 0%,rgba(236,72,153,0.09) 30%,transparent 65%);
-  animation:drift2 28s ease-in-out infinite;
-}
-@keyframes drift1{
-  0%,100%{transform:translate3d(0,0,0)}
-  50%{transform:translate3d(-40px,50px,0)}
-}
-@keyframes drift2{
-  0%,100%{transform:translate3d(0,0,0)}
-  50%{transform:translate3d(50px,-40px,0)}
-}
 
 /* إيقاف الحركات عند تبديل التبويب */
-body.paused .aurora::before,
-body.paused .aurora::after,
 body.paused .brand-icon::after,
 body.paused .chip-dot{animation-play-state:paused}
 
@@ -178,22 +153,15 @@ body.paused .chip-dot{animation-play-state:paused}
   width:100%;padding:14px 18px;border-radius:var(--radius-sm);
   border:1px solid transparent;font-family:inherit;font-size:0.95rem;
   font-weight:800;cursor:pointer;text-decoration:none;
-  transition:transform 0.15s, box-shadow 0.2s, background 0.2s, border-color 0.2s;
+  transition:background 0.2s,border-color 0.2s,box-shadow 0.2s,opacity 0.2s;
   position:relative;overflow:hidden;user-select:none;
 }
 .btn svg{width:19px;height:19px;fill:currentColor;flex:none}
-.btn:active{transform:scale(0.98)}
 .btn-install{
   background:linear-gradient(135deg,var(--green1),var(--green2));
   color:#02110a;margin-bottom:6px;
   box-shadow:0 8px 20px -10px rgba(16,185,129,0.7);
 }
-.btn-install::after{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.4),transparent 70%);
-  transform:translateX(-100%);
-}
-.btn-install:hover::after{animation:shine 0.8s ease}
 .btn-ipa{
   background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(168,85,247,0.2));
   color:#c7d2fe;border-color:rgba(139,92,246,0.4);
@@ -237,35 +205,6 @@ body.paused .chip-dot{animation-play-state:paused}
   overflow:hidden;text-overflow:ellipsis;
 }
 .link-input:focus{border-color:rgba(139,92,246,0.6)}
-
-/* ===== الكود ===== */
-.code-head{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:10px;font-size:0.82rem;font-weight:700;color:#b8c1dc;
-}
-.code-tools{display:flex;gap:6px}
-.chip-btn{
-  font-family:inherit;font-size:0.72rem;font-weight:700;
-  padding:6px 12px;border-radius:9px;
-  background:rgba(255,255,255,0.05);border:1px solid var(--stroke);
-  color:#c3cde6;cursor:pointer;
-  transition:background 0.2s,border-color 0.2s,color 0.2s;
-}
-.chip-btn:hover{
-  background:rgba(139,92,246,0.2);
-  border-color:rgba(139,92,246,0.5);color:#fff;
-}
-.chip-btn.disabled{opacity:0.4;pointer-events:none}
-.code{
-  padding:14px;border-radius:var(--radius-sm);
-  background:rgba(2,3,9,0.7);border:1px solid var(--stroke);
-  font-family:ui-monospace,Menlo,monospace;
-  font-size:0.72rem;line-height:1.7;color:#a5b0d0;
-  direction:ltr;text-align:left;white-space:pre;
-  overflow:auto;max-height:260px;margin:0;
-}
-.code::-webkit-scrollbar{width:8px;height:8px}
-.code::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:8px}
 
 /* ===== التذييل ===== */
 .footer{
@@ -388,7 +327,7 @@ body.paused .chip-dot{animation-play-state:paused}
   font-weight:800;font-size:0.85rem;
   box-shadow:0 14px 30px -12px rgba(16,185,129,0.7);
   opacity:0;pointer-events:none;
-  transition:opacity 0.25s, transform 0.25s cubic-bezier(0.2,0.9,0.3,1.3);
+  transition:opacity 0.2s, transform 0.2s cubic-bezier(0.2,0.9,0.3,1.3);
   z-index:100;white-space:nowrap;
   will-change:transform,opacity;
 }
@@ -422,7 +361,6 @@ body.paused .chip-dot{animation-play-state:paused}
 <body>
 
 <div class="bg-grid"></div>
-<div class="aurora"></div>
 
 <header class="header">
   <div class="header-inner">
@@ -440,7 +378,7 @@ body.paused .chip-dot{animation-play-state:paused}
 
   <div class="hero">
     <h1>مولّد روابط تثبيت تطبيقات iOS</h1>
-    <p>أنشئ ملف plist ورابط تثبيت جاهز في لحظات</p>
+    <p>أنشئ رابط تثبيت جاهز في لحظات</p>
   </div>
 
   <div class="grid">
@@ -448,7 +386,7 @@ body.paused .chip-dot{animation-play-state:paused}
     <section class="card">
       <div class="card-head">
         <h2>بيانات التطبيق</h2>
-        <span class="status" id="status">جاهز</span>
+        <span class="status" id="status">بانتظار البيانات</span>
       </div>
 
       <div class="field">
@@ -508,17 +446,6 @@ body.paused .chip-dot{animation-play-state:paused}
         </button>
       </div>
       <input id="itmsLink" class="link-input" type="text" readonly placeholder="—">
-
-      <div class="divider"></div>
-
-      <div class="code-head">
-        <span>manifest.plist</span>
-        <div class="code-tools">
-          <button class="chip-btn" id="copyPlist">نسخ</button>
-          <button class="chip-btn" id="downloadPlist">تنزيل</button>
-        </div>
-      </div>
-      <pre id="plistCode" class="code">…</pre>
     </aside>
 
   </div>
@@ -530,7 +457,6 @@ body.paused .chip-dot{animation-play-state:paused}
     <div class="social-wrap">
       <div class="social-label">تابعنا</div>
       <div class="social-grid">
-  
 
         <a class="social-btn" data-brand="telegram" href="https://t.me/B6_7E" target="_blank" rel="noopener" title="Telegram" aria-label="Telegram">
           <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
@@ -583,19 +509,11 @@ body.paused .chip-dot{animation-play-state:paused}
   };
   const installBtn   = $("installBtn");
   const ipaBtn       = $("ipaBtn");
-  const plistCodeEl  = $("plistCode");
   const itmsInput    = $("itmsLink");
   const statusPill   = $("status");
-  const copyPlistBtn = $("copyPlist");
-  const dlPlistBtn   = $("downloadPlist");
   const copyItmsBtn  = $("copyItms");
 
-  let currentPlist = "";
   let saveTimer = null;
-
-  const esc = (s) => String(s)
-    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;").replace(/'/g,"&apos;");
 
   function isUrl(v){
     if(!v) return false;
@@ -628,64 +546,6 @@ body.paused .chip-dot{animation-play-state:paused}
     }
   }
 
-  function buildPlist(d){
-    const assets = [];
-    assets.push(
-`                <dict>
-                    <key>kind</key>
-                    <string>software-package</string>
-                    <key>url</key>
-                    <string>${esc(d.ipa)}</string>
-                </dict>`
-    );
-    if(d.icon && isUrl(d.icon)){
-      assets.push(
-`                <dict>
-                    <key>kind</key>
-                    <string>display-image</string>
-                    <key>url</key>
-                    <string>${esc(d.icon)}</string>
-                </dict>`
-      );
-      assets.push(
-`                <dict>
-                    <key>kind</key>
-                    <string>full-size-image</string>
-                    <key>url</key>
-                    <string>${esc(d.icon)}</string>
-                </dict>`
-      );
-    }
-    return `<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
- "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>items</key>
-    <array>
-        <dict>
-            <key>assets</key>
-            <array>
-${assets.join("\n")}
-            </array>
-            <key>metadata</key>
-            <dict>
-                <key>bundle-identifier</key>
-                <string>${esc(d.bundle)}</string>
-                <key>bundle-version</key>
-                <string>${esc(d.version)}</string>
-                <key>kind</key>
-                <string>software</string>
-                <key>title</key>
-                <string>${esc(d.title)}</string>
-            </dict>
-        </dict>
-    </array>
-</dict>
-</plist>
-`;
-  }
-
   function scheduleSave(d){
     if(saveTimer) clearTimeout(saveTimer);
     saveTimer = setTimeout(() => {
@@ -704,38 +564,34 @@ ${assets.join("\n")}
     };
 
     const coreReady = d.title && d.bundle && d.version && isUrl(d.ipa);
+    const fullReady = coreReady && isUrl(d.plist);
 
-    if(coreReady){
-      currentPlist = buildPlist(d);
-      plistCodeEl.textContent = currentPlist;
-      copyPlistBtn.classList.remove("disabled");
-      dlPlistBtn.classList.remove("disabled");
-      statusPill.textContent = "الملف جاهز";
-      statusPill.classList.add("ok");
-    }else{
-      currentPlist = "";
-      plistCodeEl.textContent = "…";
-      copyPlistBtn.classList.add("disabled");
-      dlPlistBtn.classList.add("disabled");
+    if(fullReady){
       statusPill.textContent = "جاهز";
+      statusPill.classList.add("ok");
+    } else if(coreReady){
+      statusPill.textContent = "أضف رابط plist";
+      statusPill.classList.remove("ok");
+    } else {
+      statusPill.textContent = "بانتظار البيانات";
       statusPill.classList.remove("ok");
     }
 
     if(isUrl(d.ipa)){
       ipaBtn.href = d.ipa;
       ipaBtn.classList.remove("disabled");
-    }else{
+    } else {
       ipaBtn.href = "#";
       ipaBtn.classList.add("disabled");
     }
 
-    if(coreReady && isUrl(d.plist)){
+    if(fullReady){
       const itms = "itms-services://?action=download-manifest&url=" + encodeURIComponent(d.plist);
       installBtn.href = itms;
       installBtn.classList.remove("disabled");
       itmsInput.value = itms;
       copyItmsBtn.classList.remove("disabled");
-    }else{
+    } else {
       installBtn.href = "#";
       installBtn.classList.add("disabled");
       itmsInput.value = "";
@@ -759,32 +615,22 @@ ${assets.join("\n")}
     }catch(e){}
   }
 
-  function downloadPlist(){
-    if(!currentPlist){ toast("املأ الحقول المطلوبة أولاً"); return; }
-    const blob = new Blob([currentPlist], { type:"application/xml;charset=utf-8" });
-    const url  = URL.createObjectURL(blob);
-    const a    = document.createElement("a");
-    a.href = url; a.download = "manifest.plist";
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 2000);
-    toast("تم تنزيل manifest.plist 📥");
-  }
-
   Object.values(els).forEach((el) => {
     el.addEventListener("input", render);
     el.addEventListener("change", render);
   });
 
-  copyPlistBtn.addEventListener("click", () => copyText(currentPlist));
-  dlPlistBtn.addEventListener("click", downloadPlist);
   copyItmsBtn.addEventListener("click", () => copyText(itmsInput.value));
 
+  // زر التثبيت — فوري بدون أي تأخير
   installBtn.addEventListener("click", (e) => {
     if(installBtn.classList.contains("disabled")){
       e.preventDefault();
       toast("أدخل رابط ملف plist المستضاف أولاً");
     }
+    // إذا كان مفعلاً → المتصفح يفتح الإشعار فوراً
   });
+
   ipaBtn.addEventListener("click", (e) => {
     if(ipaBtn.classList.contains("disabled")){
       e.preventDefault();
@@ -792,12 +638,10 @@ ${assets.join("\n")}
     }
   });
 
-  // إيقاف حركات الخلفية عند تبديل التبويب (توفير معالجة كبيرة)
   document.addEventListener("visibilitychange", () => {
     document.body.classList.toggle("paused", document.hidden);
   });
 
-  // حفظ فوري قبل إغلاق الصفحة
   window.addEventListener("beforeunload", () => {
     if(saveTimer){
       clearTimeout(saveTimer);
