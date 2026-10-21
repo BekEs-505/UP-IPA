@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>.👻 BekEs | بيكاس :</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#04050c;
+  --text:#eef2ff;
+  --muted:#7d87a8;
+  --c1:#6366f1;
+  --c2:#a855f7;
+  --c3:#ec4899;
+  --green1:#22c55e;
+  --green2:#10b981;
+  --stroke:rgba(255,255,255,0.08);
+  --radius:22px;
+  --radius-sm:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Tajawal',system-ui,-apple-system,sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;display:flex;flex-direction:column;
+  overflow-x:hidden;line-height:1.65;
+  -webkit-font-smoothing:antialiased;position:relative;
+}
+
+/* ===== الخلفيات ===== */
+.bg-grid{
+  position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 100% 70% at 50% 0%,#000 30%,transparent 80%);
+  -webkit-mask-image:radial-gradient(ellipse 100% 70% at 50% 0%,#000 30%,transparent 80%);
+}
+.aurora{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.aurora::before,.aurora::after{content:"";position:absolute;border-radius:50%;filter:blur(90px);opacity:.55}
+.aurora::before{
+  width:700px;height:700px;top:-280px;right:-200px;
+  background:radial-gradient(circle,var(--c1),transparent 60%);
+  animation:drift1 20s ease-in-out infinite;
+}
+.aurora::after{
+  width:600px;height:600px;bottom:-250px;left:-150px;
+  background:radial-gradient(circle,var(--c3),transparent 60%);
+  animation:drift2 24s ease-in-out infinite;
+}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-50px,60px) scale(1.1)}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(60px,-50px) scale(1.15)}}
+
+/* ===== الهيدر ===== */
+.header{padding:20px 24px;position:relative;z-index:10;display:flex;justify-content:center}
+.header-inner{
+  width:100%;max-width:1200px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 20px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--stroke);
+  border-radius:18px;
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-icon{
+  width:40px;height:40px;border-radius:12px;
+  background:linear-gradient(135deg,var(--c1),var(--c2),var(--c3));
+  display:grid;place-items:center;
+  box-shadow:0 8px 24px -8px rgba(168,85,247,0.7),inset 0 1px 0 rgba(255,255,255,0.3);
+  position:relative;overflow:hidden;flex:none;
+}
+.brand-icon svg{width:22px;height:22px;fill:#fff;position:relative;z-index:1}
+.brand-icon::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.35),transparent 70%);
+  transform:translateX(-100%);animation:shine 3s infinite;
+}
+@keyframes shine{0%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
+.brand-name{font-size:1.3rem;font-weight:800;letter-spacing:-0.5px;color:#fff}
+.brand-accent{
+  background:linear-gradient(135deg,var(--c1),var(--c2),var(--c3));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.header-badge{
+  font-size:0.72rem;font-weight:700;padding:5px 12px;border-radius:999px;
+  background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.3);
+  color:#a5b4fc;letter-spacing:0.5px;
+}
+
+/* ===== الرئيسي ===== */
+.main{flex:1;width:100%;max-width:1200px;margin:0 auto;padding:30px 24px 60px}
+.hero{text-align:center;margin-bottom:36px;padding:0 16px}
+.hero h1{
+  font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:800;letter-spacing:-0.5px;
+  background:linear-gradient(135deg,#fff 20%,#c7d2fe 60%,#e9d5ff);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  margin-bottom:8px;line-height:1.3;
+}
+.hero p{font-size:0.95rem;color:var(--muted)}
+
+/* ===== الشبكة ===== */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+@media(max-width:880px){.grid{grid-template-columns:1fr}}
+
+/* ===== البطاقة ===== */
+.card{
+  background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));
+  border:1px solid var(--stroke);border-radius:var(--radius);
+  padding:24px;
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  box-shadow:0 24px 60px -30px rgba(0,0,0,0.9),inset 0 1px 0 rgba(255,255,255,0.06);
+  position:relative;overflow:hidden;
+}
+.card::before{
+  content:"";position:absolute;top:0;left:20%;right:20%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(168,85,247,0.5),transparent);
+}
+.card-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--stroke);
+}
+.card-head h2{font-size:1.05rem;font-weight:800;color:#fff}
+.status{
+  font-size:0.72rem;font-weight:700;padding:4px 12px;border-radius:999px;
+  background:rgba(255,255,255,0.04);border:1px solid var(--stroke);
+  color:var(--muted);transition:0.3s;white-space:nowrap;
+}
+.status.ok{
+  background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.4);
+  color:#6ee7b7;box-shadow:0 0 20px -4px rgba(16,185,129,0.5);
+}
+
+/* ===== النموذج ===== */
+.field{margin-bottom:14px}
+.field:last-child{margin-bottom:0}
+.field label{display:block;font-size:0.82rem;font-weight:700;color:#b8c1dc;margin-bottom:7px}
+.field input{
+  width:100%;padding:13px 15px;border-radius:var(--radius-sm);
+  background:rgba(5,7,15,0.6);border:1px solid var(--stroke);
+  color:var(--text);font-family:inherit;font-size:0.92rem;
+  outline:none;transition:0.2s;min-width:0;
+}
+.field input::placeholder{color:#4a5470}
+.field input:focus{
+  border-color:rgba(139,92,246,0.8);
+  background:rgba(5,7,15,0.85);
+  box-shadow:0 0 0 4px rgba(139,92,246,0.12);
+}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+@media(max-width:520px){.field-row{grid-template-columns:1fr}}
+
+/* ===== الأزرار ===== */
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;padding:14px 18px;border-radius:var(--radius-sm);
+  border:1px solid transparent;font-family:inherit;font-size:0.95rem;
+  font-weight:800;cursor:pointer;text-decoration:none;
+  transition:0.2s;position:relative;overflow:hidden;user-select:none;
+}
+.btn svg{width:19px;height:19px;fill:currentColor;flex:none}
+.btn:active{transform:scale(0.98)}
+.btn-install{
+  background:linear-gradient(135deg,var(--green1),var(--green2));
+  color:#02110a;margin-bottom:6px;
+  box-shadow:0 12px 30px -12px rgba(16,185,129,0.8),inset 0 1px 0 rgba(255,255,255,0.3);
+}
+.btn-install::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.4),transparent 70%);
+  transform:translateX(-100%);
+}
+.btn-install:hover::after{animation:shine 0.8s ease}
+.btn-ipa{
+  background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(168,85,247,0.2));
+  color:#c7d2fe;border-color:rgba(139,92,246,0.4);
+}
+.btn-ipa:hover{
+  background:linear-gradient(135deg,rgba(99,102,241,0.35),rgba(168,85,247,0.35));
+  border-color:rgba(139,92,246,0.7);
+}
+.btn.disabled{opacity:0.4;pointer-events:none;filter:grayscale(0.6)}
+.btn-hint{text-align:center;font-size:0.72rem;color:var(--muted);margin-bottom:14px}
+
+/* ===== الفاصل ===== */
+.divider{
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--stroke),transparent);
+  margin:18px 0;
+}
+
+/* ===== رابط التثبيت ===== */
+.link-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:8px;font-size:0.82rem;font-weight:700;color:#b8c1dc;
+}
+.copy-btn{
+  width:32px;height:32px;border-radius:9px;
+  background:rgba(255,255,255,0.05);border:1px solid var(--stroke);
+  color:#c3cde6;cursor:pointer;display:grid;place-items:center;transition:0.2s;flex:none;
+}
+.copy-btn:hover{
+  background:rgba(139,92,246,0.25);
+  border-color:rgba(139,92,246,0.5);color:#fff;
+}
+.copy-btn svg{width:14px;height:14px;fill:currentColor}
+.link-input{
+  width:100%;padding:11px 14px;border-radius:var(--radius-sm);
+  background:rgba(5,7,15,0.6);border:1px solid var(--stroke);
+  color:#a5b0d0;font-size:0.78rem;
+  font-family:ui-monospace,Menlo,monospace;
+  direction:ltr;text-align:left;outline:none;
+  overflow:hidden;text-overflow:ellipsis;
+}
+.link-input:focus{border-color:rgba(139,92,246,0.6)}
+
+/* ===== الكود ===== */
+.code-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:10px;font-size:0.82rem;font-weight:700;color:#b8c1dc;
+}
+.code-tools{display:flex;gap:6px}
+.chip-btn{
+  font-family:inherit;font-size:0.72rem;font-weight:700;
+  padding:6px 12px;border-radius:9px;
+  background:rgba(255,255,255,0.05);border:1px solid var(--stroke);
+  color:#c3cde6;cursor:pointer;transition:0.2s;
+}
+.chip-btn:hover{
+  background:rgba(139,92,246,0.2);
+  border-color:rgba(139,92,246,0.5);color:#fff;
+}
+.chip-btn.disabled{opacity:0.4;pointer-events:none}
+.code{
+  padding:14px;border-radius:var(--radius-sm);
+  background:rgba(2,3,9,0.7);border:1px solid var(--stroke);
+  font-family:ui-monospace,Menlo,monospace;
+  font-size:0.72rem;line-height:1.7;color:#a5b0d0;
+  direction:ltr;text-align:left;white-space:pre;
+  overflow:auto;max-height:260px;margin:0;
+}
+.code::-webkit-scrollbar{width:8px;height:8px}
+.code::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:8px}
+
+/* ===== التذييل ===== */
+.footer{
+  position:relative;padding:70px 24px 50px;text-align:center;
+  overflow:hidden;border-top:1px solid var(--stroke);margin-top:40px;
+}
+.footer::before{
+  content:"B6_7E@";
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-size:clamp(80px,16vw,200px);
+  font-weight:900;letter-spacing:-0.06em;
+  background:linear-gradient(135deg,var(--c1),var(--c2),var(--c3));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  opacity:0.06;pointer-events:none;white-space:nowrap;user-select:none;z-index:0;
+}
+.footer-inner{
+  position:relative;z-index:1;max-width:1200px;margin:0 auto;
+  display:flex;flex-direction:column;align-items:center;gap:22px;
+}
+
+/* ===== التواصل الاجتماعي ===== */
+.social-wrap{
+  display:flex;flex-direction:column;align-items:center;gap:16px;
+  width:100%;
+}
+.social-label{
+  font-size:0.78rem;font-weight:700;color:var(--muted);
+  letter-spacing:2px;text-transform:uppercase;
+  display:flex;align-items:center;gap:12px;
+}
+.social-label::before,.social-label::after{
+  content:"";width:40px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--stroke),transparent);
+}
+.social-label::before{background:linear-gradient(90deg,transparent,rgba(168,85,247,0.4))}
+.social-label::after{background:linear-gradient(90deg,rgba(168,85,247,0.4),transparent)}
+.social-grid{
+  display:flex;flex-wrap:wrap;justify-content:center;
+  gap:12px;max-width:640px;
+}
+.social-btn{
+  position:relative;
+  width:52px;height:52px;border-radius:16px;
+  display:grid;place-items:center;
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--stroke);
+  color:#a5b0d0;
+  text-decoration:none;cursor:pointer;
+  transition:0.35s cubic-bezier(0.2,0.9,0.3,1.3);
+  overflow:hidden;
+  backdrop-filter:blur(10px);
+}
+.social-btn::before{
+  content:"";position:absolute;inset:0;
+  background:var(--brand-gradient);
+  opacity:0;transition:0.35s;
+  z-index:0;
+}
+.social-btn::after{
+  content:"";position:absolute;inset:-2px;border-radius:18px;
+  background:var(--brand-gradient);
+  opacity:0;filter:blur(14px);transition:0.35s;
+  z-index:-1;
+}
+.social-btn svg{
+  width:24px;height:24px;fill:currentColor;
+  position:relative;z-index:1;
+  transition:0.35s;
+}
+.social-btn:hover{
+  transform:translateY(-6px) scale(1.05);
+  border-color:transparent;color:#fff;
+}
+.social-btn:hover::before{opacity:1}
+.social-btn:hover::after{opacity:0.7}
+.social-btn:hover svg{
+  transform:scale(1.1);
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+/* ألوان كل منصة */
+.social-btn[data-brand="whatsapp"]{--brand-gradient:linear-gradient(135deg,#25D366,#128C7E)}
+.social-btn[data-brand="telegram"]{--brand-gradient:linear-gradient(135deg,#2AABEE,#229ED9)}
+.social-btn[data-brand="instagram"]{--brand-gradient:linear-gradient(135deg,#F58529,#DD2A7B,#8134AF)}
+.social-btn[data-brand="twitter"]{--brand-gradient:linear-gradient(135deg,#1DA1F2,#0d8bd9)}
+.social-btn[data-brand="tiktok"]{--brand-gradient:linear-gradient(135deg,#25F4EE,#000,#FE2C55)}
+.social-btn[data-brand="youtube"]{--brand-gradient:linear-gradient(135deg,#FF0000,#c00)}
+.social-btn[data-brand="facebook"]{--brand-gradient:linear-gradient(135deg,#1877F2,#0d5fc4)}
+.social-btn[data-brand="snapchat"]{--brand-gradient:linear-gradient(135deg,#FFFC00,#FFD700)}
+
+/* ألوان الأيقونات الأصلية قبل المرور */
+.social-btn[data-brand="whatsapp"] svg{color:#25D366}
+.social-btn[data-brand="telegram"] svg{color:#2AABEE}
+.social-btn[data-brand="instagram"] svg{color:#E4405F}
+.social-btn[data-brand="twitter"] svg{color:#1DA1F2}
+.social-btn[data-brand="tiktok"] svg{color:#fff}
+.social-btn[data-brand="youtube"] svg{color:#FF0000}
+.social-btn[data-brand="facebook"] svg{color:#1877F2}
+.social-btn[data-brand="snapchat"] svg{color:#FFFC00}
+
+.social-btn:hover svg{color:#fff}
+
+/* ===== الهوية والحقوق ===== */
+.footer-brand{
+  font-size:1.5rem;font-weight:900;letter-spacing:-0.5px;
+  background:linear-gradient(135deg,var(--c1),var(--c2),var(--c3));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 24px rgba(168,85,247,0.4));
+}
+.footer-chip{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:8px 18px;border-radius:999px;
+  background:rgba(255,255,255,0.03);border:1px solid var(--stroke);
+  font-size:0.78rem;color:var(--muted);
+  backdrop-filter:blur(10px);flex-wrap:wrap;justify-content:center;
+}
+.chip-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--green1);box-shadow:0 0 12px var(--green1);
+  animation:pulse 2s infinite;flex:none;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.85)}}
+.chip-sep{opacity:0.4}
+
+/* ===== التوست ===== */
+#toast{
+  position:fixed;bottom:30px;left:50%;
+  transform:translate(-50%,30px);
+  background:linear-gradient(135deg,var(--green2),var(--green1));
+  color:#02110a;padding:12px 26px;border-radius:999px;
+  font-weight:800;font-size:0.85rem;
+  box-shadow:0 20px 40px -12px rgba(16,185,129,0.8);
+  opacity:0;pointer-events:none;
+  transition:0.3s cubic-bezier(0.2,0.9,0.3,1.3);
+  z-index:100;white-space:nowrap;
+}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ===== الاستجابة ===== */
+@media(max-width:500px){
+  .header{padding:14px 12px}
+  .header-inner{padding:10px 14px;border-radius:14px}
+  .header-badge{display:none}
+  .main{padding:20px 14px 40px}
+  .card{padding:18px;border-radius:18px}
+  .hero{margin-bottom:24px}
+  .footer{padding:50px 16px 40px}
+  .social-btn{width:46px;height:46px;border-radius:14px}
+  .social-btn svg{width:21px;height:21px}
+  .social-grid{gap:10px}
+  .social-label::before,.social-label::after{width:24px}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="aurora"></div>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2a1 1 0 0 1 1 1v10.59l3.3-3.3a1 1 0 1 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.42l3.3 3.3V3a1 1 0 0 1 1-1zM4 19a1 1 0 0 1 1 1v1h14v-1a1 1 0 1 1 2 0v1.5A1.5 1.5 0 0 1 19.5 23h-15A1.5 1.5 0 0 1 3 21.5V20a1 1 0 0 1 1-1z"/></svg>
+      </div>
+      <span class="brand-name">Bek<span class="brand-accent">Es</span></span>
+    </div>
+    <div class="header-badge">iOS OTA</div>
+  </div>
+</header>
+
+<main class="main">
+
+  <div class="hero">
+    <h1>مولّد روابط تثبيت تطبيقات iOS</h1>
+    <p>أنشئ ملف plist ورابط تثبيت جاهز </p>
+  </div>
+
+  <div class="grid">
+
+    <!-- النموذج -->
+    <section class="card">
+      <div class="card-head">
+        <h2>بيانات التطبيق</h2>
+        <span class="status" id="status">جاهز</span>
+      </div>
+
+      <div class="field">
+        <label for="appTitle">اسم التطبيق</label>
+        <input id="appTitle" type="text" placeholder="اسم التطبيق" autocomplete="off">
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="bundleId">Bundle ID</label>
+          <input id="bundleId" type="text" dir="ltr" placeholder="com.example.app" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="appVersion">الإصدار</label>
+          <input id="appVersion" type="text" dir="ltr" placeholder="1.0.0" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="ipaUrl">رابط ملف IPA</label>
+        <input id="ipaUrl" type="url" dir="ltr" placeholder="https://.../app.ipa" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label for="iconUrl">رابط الأيقونة (اختياري)</label>
+        <input id="iconUrl" type="url" dir="ltr" placeholder="https://.../icon.png" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label for="plistUrl">رابط ملف plist المستضاف</label>
+        <input id="plistUrl" type="url" dir="ltr" placeholder="https://.../manifest.plist" autocomplete="off">
+      </div>
+    </section>
+
+    <!-- النتيجة -->
+    <aside class="card">
+      <div class="card-head">
+        <h2>التثبيت</h2>
+      </div>
+
+      <a id="installBtn" class="btn btn-install disabled" href="#">
+        <svg viewBox="0 0 24 24"><path d="M12 3a1 1 0 0 1 1 1v9.59l2.3-2.3a1 1 0 1 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.42l2.3 2.3V4a1 1 0 0 1 1-1zM4 18a1 1 0 0 1 1 1v1h14v-1a1 1 0 1 1 2 0v1.5A1.5 1.5 0 0 1 19.5 22h-15A1.5 1.5 0 0 1 3 20.5V19a1 1 0 0 1 1-1z"/></svg>
+        تثبيت التطبيق
+      </a>
+      <p class="btn-hint">متوفر على iPhone و iPad</p>
+
+      <a id="ipaBtn" class="btn btn-ipa disabled" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M6 2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm7 1.5V9h5.5L13 3.5z"/></svg>
+        تحميل ملف IPA
+      </a>
+
+      <div class="divider"></div>
+
+      <div class="link-head">
+        <span>رابط التثبيت</span>
+        <button class="copy-btn" id="copyItms" title="نسخ">
+          <svg viewBox="0 0 24 24"><path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11v14z"/></svg>
+        </button>
+      </div>
+      <input id="itmsLink" class="link-input" type="text" readonly placeholder="—">
+
+      <div class="divider"></div>
+
+      <div class="code-head">
+        <span>manifest.plist</span>
+        <div class="code-tools">
+          <button class="chip-btn" id="copyPlist">نسخ</button>
+          <button class="chip-btn" id="downloadPlist">تنزيل</button>
+        </div>
+      </div>
+      <pre id="plistCode" class="code">…</pre>
+    </aside>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+
+    <!-- قسم التواصل الاجتماعي -->
+    <div class="social-wrap">
+      <div class="social-label">تابعنا</div>
+      <div class="social-grid">
+
+        <a class="social-btn" data-brand="whatsapp" href="https://wa.me/" target="_blank" rel="noopener" title="WhatsApp" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        </a>
+
+        <a class="social-btn" data-brand="telegram" href="https://t.me/B6_7E" target="_blank" rel="noopener" title="Telegram" aria-label="Telegram">
+          <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </a>
+
+        <a class="social-btn" data-brand="instagram" href="https://instagram.com/B6_7E" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        </a>
+
+        <a class="social-btn" data-brand="twitter" href="https://x.com/B6_7E" target="_blank" rel="noopener" title="X" aria-label="X">
+          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+
+        <a class="social-btn" data-brand="tiktok" href="https://tiktok.com/B6_7E" target="_blank" rel="noopener" title="TikTok" aria-label="TikTok">
+          <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+        </a>
+
+        <a class="social-btn" data-brand="youtube" href="https://youtube.com/B6_7E" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube">
+          <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+
+        <a class="social-btn" data-brand="facebook" href="https://facebook.com/B6_7E" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+
+        <a class="social-btn" data-brand="snapchat" href="https://snapchat.com/B6_7E" target="_blank" rel="noopener" title="Snapchat" aria-label="Snapchat">
+          <svg viewBox="0 0 24 24"><path d="M12.206.793c.99 0 4.347.276 5.93 3.821.529 1.193.403 3.219.299 4.847l-.003.06c-.012.18-.022.345-.03.51.075.045.203.09.401.09.3-.016.659-.12 1.033-.301.165-.088.344-.104.464-.104.182 0 .359.029.509.09.45.149.734.479.734.838.015.449-.39.839-1.213 1.168-.089.029-.209.075-.344.119-.45.135-1.139.36-1.333.81-.09.224-.061.524.12.868l.015.015c.06.136 1.526 3.475 4.791 4.014.255.044.435.27.42.509 0 .075-.015.149-.045.225-.24.569-1.273.988-3.146 1.271-.059.091-.12.375-.164.57-.029.179-.074.36-.134.553-.076.271-.27.405-.555.405h-.03c-.135 0-.313-.031-.538-.074-.36-.075-.765-.135-1.273-.135-.3 0-.599.015-.913.074-.6.104-1.123.464-1.723.884-.853.599-1.826 1.288-3.294 1.288-.06 0-.119-.015-.18-.015h-.149c-1.468 0-2.427-.675-3.279-1.288-.599-.42-1.107-.779-1.707-.884-.314-.045-.629-.074-.928-.074-.54 0-.958.089-1.272.149-.211.043-.391.074-.54.074-.374 0-.523-.224-.583-.42-.061-.192-.09-.389-.135-.567-.046-.181-.105-.494-.166-.57-1.918-.222-2.95-.642-3.189-1.226-.031-.063-.052-.15-.055-.225-.015-.243.165-.465.42-.509 3.264-.54 4.73-3.879 4.791-4.02l.016-.029c.18-.345.224-.645.119-.869-.195-.434-.884-.658-1.332-.809-.121-.029-.24-.074-.346-.119-1.107-.435-1.257-.93-1.197-1.273.09-.479.674-.793 1.168-.793.146 0 .27.029.383.074.42.194.789.3 1.104.3.234 0 .384-.06.465-.105l-.046-.569c-.098-1.626-.225-3.651.307-4.837C7.392 1.077 10.739.807 11.727.807l.419-.015h.06z"/></svg>
+        </a>
+
+      </div>
+    </div>
+
+    <div class="footer-brand">بيكاس | BekEs</div>
+
+    <div class="footer-chip">
+      <span class="chip-dot"></span>
+      <span>© 2025 𝐁𝐄𝐊𝐄𝐒</span>
+      <span class="chip-sep">·</span>
+      <span>جميع الحقوق محفوظة</span>
+    </div>
+  </div>
+</footer>
+
+<div id="toast">تم النسخ بنجاح ✅</div>
+
+<script>
+(function(){
+  "use strict";
+  const $ = (id) => document.getElementById(id);
+
+  const els = {
+    appTitle:$("appTitle"), bundleId:$("bundleId"), appVersion:$("appVersion"),
+    ipaUrl:$("ipaUrl"), iconUrl:$("iconUrl"), plistUrl:$("plistUrl")
+  };
+  const installBtn   = $("installBtn");
+  const ipaBtn       = $("ipaBtn");
+  const plistCodeEl  = $("plistCode");
+  const itmsInput    = $("itmsLink");
+  const statusPill   = $("status");
+  const copyPlistBtn = $("copyPlist");
+  const dlPlistBtn   = $("downloadPlist");
+  const copyItmsBtn  = $("copyItms");
+
+  let currentPlist = "";
+
+  const esc = (s) => String(s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/'/g,"&apos;");
+
+  function isUrl(v){
+    if(!v) return false;
+    try{ const u = new URL(v); return u.protocol==="http:"||u.protocol==="https:"; }
+    catch(e){ return false; }
+  }
+
+  function toast(msg){
+    const t = $("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(t._tid);
+    t._tid = setTimeout(() => t.classList.remove("show"), 2200);
+  }
+
+  async function copyText(text){
+    if(!text) return;
+    try{
+      await navigator.clipboard.writeText(text);
+      toast("تم النسخ بنجاح ✅");
+    }catch(e){
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.cssText = "position:fixed;opacity:0;top:0;left:0";
+      document.body.appendChild(ta);
+      ta.select();
+      try{ document.execCommand("copy"); toast("تم النسخ بنجاح ✅"); }
+      catch(err){ toast("تعذّر النسخ"); }
+      ta.remove();
+    }
+  }
+
+  function buildPlist(d){
+    const assets = [];
+    assets.push(
+`                <dict>
+                    <key>kind</key>
+                    <string>software-package</string>
+                    <key>url</key>
+                    <string>${esc(d.ipa)}</string>
+                </dict>`
+    );
+    if(d.icon && isUrl(d.icon)){
+      assets.push(
+`                <dict>
+                    <key>kind</key>
+                    <string>display-image</string>
+                    <key>url</key>
+                    <string>${esc(d.icon)}</string>
+                </dict>`
+      );
+      assets.push(
+`                <dict>
+                    <key>kind</key>
+                    <string>full-size-image</string>
+                    <key>url</key>
+                    <string>${esc(d.icon)}</string>
+                </dict>`
+      );
+    }
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+ "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>items</key>
+    <array>
+        <dict>
+            <key>assets</key>
+            <array>
+${assets.join("\n")}
+            </array>
+            <key>metadata</key>
+            <dict>
+                <key>bundle-identifier</key>
+                <string>${esc(d.bundle)}</string>
+                <key>bundle-version</key>
+                <string>${esc(d.version)}</string>
+                <key>kind</key>
+                <string>software</string>
+                <key>title</key>
+                <string>${esc(d.title)}</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
+`;
+  }
+
+  function render(){
+    const d = {
+      title:   els.appTitle.value.trim(),
+      bundle:  els.bundleId.value.trim(),
+      version: els.appVersion.value.trim(),
+      ipa:     els.ipaUrl.value.trim(),
+      icon:    els.iconUrl.value.trim(),
+      plist:   els.plistUrl.value.trim()
+    };
+
+    const coreReady = d.title && d.bundle && d.version && isUrl(d.ipa);
+
+    if(coreReady){
+      currentPlist = buildPlist(d);
+      plistCodeEl.textContent = currentPlist;
+      copyPlistBtn.classList.remove("disabled");
+      dlPlistBtn.classList.remove("disabled");
+      statusPill.textContent = "الملف جاهز";
+      statusPill.classList.add("ok");
+    }else{
+      currentPlist = "";
+      plistCodeEl.textContent = "…";
+      copyPlistBtn.classList.add("disabled");
+      dlPlistBtn.classList.add("disabled");
+      statusPill.textContent = "جاهز";
+      statusPill.classList.remove("ok");
+    }
+
+    if(isUrl(d.ipa)){
+      ipaBtn.href = d.ipa;
+      ipaBtn.classList.remove("disabled");
+    }else{
+      ipaBtn.href = "#";
+      ipaBtn.classList.add("disabled");
+    }
+
+    if(coreReady && isUrl(d.plist)){
+      const itms = "itms-services://?action=download-manifest&url=" + encodeURIComponent(d.plist);
+      installBtn.href = itms;
+      installBtn.classList.remove("disabled");
+      itmsInput.value = itms;
+      copyItmsBtn.classList.remove("disabled");
+    }else{
+      installBtn.href = "#";
+      installBtn.classList.add("disabled");
+      itmsInput.value = "";
+      copyItmsBtn.classList.add("disabled");
+    }
+
+    try{ localStorage.setItem("bekes_form", JSON.stringify(d)); }catch(e){}
+  }
+
+  function restore(){
+    try{
+      const raw = localStorage.getItem("bekes_form");
+      if(!raw) return;
+      const d = JSON.parse(raw);
+      els.appTitle.value   = d.title   || "";
+      els.bundleId.value   = d.bundle  || "";
+      els.appVersion.value = d.version || "";
+      els.ipaUrl.value     = d.ipa     || "";
+      els.iconUrl.value    = d.icon    || "";
+      els.plistUrl.value   = d.plist   || "";
+    }catch(e){}
+  }
+
+  function downloadPlist(){
+    if(!currentPlist){ toast("املأ الحقول المطلوبة أولاً"); return; }
+    const blob = new Blob([currentPlist], { type:"application/xml;charset=utf-8" });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement("a");
+    a.href = url; a.download = "manifest.plist";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 3000);
+    toast("تم تنزيل manifest.plist 📥");
+  }
+
+  Object.values(els).forEach((el) => {
+    el.addEventListener("input", render);
+    el.addEventListener("change", render);
+  });
+
+  copyPlistBtn.addEventListener("click", () => copyText(currentPlist));
+  dlPlistBtn.addEventListener("click", downloadPlist);
+  copyItmsBtn.addEventListener("click", () => copyText(itmsInput.value));
+
+  installBtn.addEventListener("click", (e) => {
+    if(installBtn.classList.contains("disabled")){
+      e.preventDefault();
+      toast("أدخل رابط ملف plist المستضاف أولاً");
+    }
+  });
+  ipaBtn.addEventListener("click", (e) => {
+    if(ipaBtn.classList.contains("disabled")){
+      e.preventDefault();
+      toast("أدخل رابط ملف IPA أولاً");
+    }
+  });
+
+  restore();
+  render();
+})();
+</script>
+</body>
+</html>
